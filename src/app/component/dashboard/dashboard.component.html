@@ -1,0 +1,330 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">TaskManager</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     
+        
+      <form class="d-flex ms-auto" role="search">
+        <button class=" btn btn-primary"  data-bs-toggle="modal" data-bs-target="#addTask">Add Task</button>
+        <button class="btn btn-outline-warning mx-2" data-bs-toggle="modal" data-bs-target="#addUser" type="submit">Add User</button>
+        <button class="btn btn-outline-success mx-2 " data-bs-toggle="modal" data-bs-target="#addCategory"type="submit">Add Cateogory</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<form class="row row-cols-lg-auto g-3 align-items-center mt-3 text-center mx-3">
+
+  <div class="form-floating col-12">
+  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="user" [(ngModel)]="selectedUserId">
+    @for (user of users; track $index) {
+      <option [ngValue]="user.id"> {{user.name}}</option>
+    }
+  </select>
+  <label for="floatingSelect">User</label>
+</div>
+  
+ <div class="form-floating col-12">
+  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="cateogory" [(ngModel)]="selectedCategoryId">
+    @for (cateogory of categories; track $index) {
+      <option [ngValue]="cateogory.id"> {{cateogory.name}}</option>
+    }
+  </select>
+  <label for="floatingSelect">Cateogory</label>
+</div>
+  
+  
+
+<div class="col-12">
+    <button type="submit" class="btn btn-primary" (click)="getAllTasks()">search</button>
+  </div>
+</form>
+
+
+
+<div class="container-fluid mt-5">
+  <div class="row"></div>
+  <div class="col-6">
+    <h4 class="text-center">Inprogress tasks</h4>
+    <hr>
+</div>
+
+@for(task of inprogressTask; track $index ){
+      <div class="card">
+        <div class="card-body">
+          <button class="btn"   data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="selectTask(task)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+</svg></button>
+
+          <button class="btn"data-bs-toggle="modal" data-bs-target="#editFormModel" (click)="selectTask(task)" >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+</svg></button>
+
+          <button class="btn" (click)="deleteTask(task)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+  <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5zm13-3H1v2h14zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+</svg></button>
+          {{task.title}}
+        </div>
+
+      </div>
+    }
+
+</div>
+
+
+
+<div class="col-6">
+  <h4 class="text-center">Completed Task</h4>
+  <hr>
+  @for(task of completedTasks; track $index ){
+      <div class="card">
+        <div class="card-body">
+          <button class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="selectTask(task)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+</svg></button>
+
+          <button class="btn" class="btn" data-bs-toggle="modal" data-bs-target="#editFormModel" (click)="selectTask(task)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+</svg></button>
+
+           <button class="btn" (click)="deleteTask(task)" >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+  <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5zm13-3H1v2h14zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+</svg></button>
+          {{task.title}}
+        </div>
+
+      </div>
+    }
+
+</div>
+
+
+<!-- <--view model--> 
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Task Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+<form>
+  <fieldset disabled>
+  <div class="mb-3">
+    Title
+  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  [value]="selectedTask?.title">
+   </div>
+
+  <div class="mb-3">
+    Description
+   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  [value]="selectedTask?.description">
+    
+  </div>
+<div class="mb-3">
+    Task Status
+   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  [value]="(selectedTask?.completed== false)?'In progress':'Completed'">
+    
+  </div>
+
+  <div class="mb-3">
+    DueDate
+   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  [value]="selectedTask?.dueDate">
+    
+  </div>
+
+
+
+  </fieldset>
+ 
+</form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <--edit model--> 
+<div class="modal fade" id="editFormModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel"> Update Task details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+ <form [formGroup]="updateTaskForm" (ngSubmit)="updateTask()" >
+  
+  <div class="mb-3">
+    Title
+  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="title" >
+   </div>
+
+  <div class="mb-3">
+    Description
+   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="description" >
+    
+  </div>
+<div class="mb-3">
+    Task Status
+   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  formControlName="completed">
+    
+  </div>
+
+  <div class="mb-3">
+    DueDate
+   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  formControlName="dueDate">
+    
+  </div>
+
+  <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+      </div>
+</form>
+
+     </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- <--task model--> 
+<div class="modal fade" id="addTask" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Task Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+<form [formGroup]="newTaskForm" (ngSubmit)="addNewTask()">
+  
+  <div class="mb-3">
+    Title
+  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  formControlName="title">
+   </div>
+
+  <div class="mb-3">
+    Description
+   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="description">
+    
+  </div>
+
+
+  <div class="mb-3">
+    DueDate
+   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  formControlName="dueDate">
+    
+  </div>
+
+  <div class="mb-3">
+     User
+
+ <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="user" formControlName="userId">
+    @for (user of users; track $index) {
+      <option [ngValue]="user.id"> {{user.name}}</option>
+    }
+  </select>
+</div>
+
+<div class="mb-3">
+  Cateogory
+  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="cateogory" formControlName="categoryId">
+    @for (cateogory of categories; track $index) {
+      <option [ngValue]="cateogory.id"> {{cateogory.name}}</option>
+    }
+  </select>
+ </div>
+ <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">create</button>
+      </div>
+</form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- <--add user model--> 
+<div class="modal fade" id="addUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">User Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+<form [formGroup]="newUserForm" (ngSubmit)="addNewUser()">
+  
+  <div class="mb-3">
+    Name
+  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  formControlName="name">
+   </div>
+
+ 
+ <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add User</button>
+      </div>
+</form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- <--add category model--> 
+<div class="modal fade" id="addCategory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Category Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      
+<form [formGroup]="newCategoryForm" (ngSubmit)="addCategoryUser()">
+  
+  <div class="mb-3">
+    Name
+  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  formControlName="name">
+   </div>
+
+ 
+ <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add Category</button>
+      </div>
+</form>
+
+      </div>
+      
+    </div>
+  </div>
+</div>

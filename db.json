@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@gmail.com"
+    },
+    {
+      "id": "2",
+      "name": "Nishutha",
+      "email": "nishutha@example.com"
+    },
+    {
+      "id": "3",
+      "name": "bobby"
+    },
+    {
+      "id": 4,
+      "name": "Alice"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Work"
+    },
+    {
+      "id": "2",
+      "name": "Personal"
+    },
+    {
+      "id": "3",
+      "name": "Shopping"
+    },
+    {
+      "id": "4",
+      "name": "Exercise"
+    },
+    {
+      "id": 6,
+      "name": "Test"
+    }
+  ],
+  "todos": [
+    {
+      "id": "101",
+      "title": "Finish Angular project",
+      "description": "Complete the remaining components",
+      "completed": false,
+      "dueDate": "15-08-2024",
+      "categoryId": 1,
+      "userId": 1
+    },
+    {
+      "id": "102",
+      "title": "Buy groceries",
+      "description": "Milk, eggs, fruits",
+      "completed": true,
+      "dueDate": "30-08-2024",
+      "categoryId": 3,
+      "userId": 2
+    },
+    {
+      "id": "103",
+      "title": "Book dentist appointment",
+      "description": "call to scedule an appointment",
+      "completed": false,
+      "dueDate": "20-08-2023",
+      "userId": 2,
+      "categoryId": 2
+    },
+    {
+      "id": "104",
+      "title": "add task",
+      "description": "add new task",
+      "completed": false,
+      "dueDate": "20-05-2005",
+      "userId": 1,
+      "categoryId": 1
+    }
+  ]
+}
